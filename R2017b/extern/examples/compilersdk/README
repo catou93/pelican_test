@@ -1,0 +1,114 @@
+This readme is intended for MATLAB Compiler SDK.
+
+Copyright 1997-2016 The MathWorks, Inc.
+
+
+                               README
+
+The files in this directory fall into two categories:
+
+   * Example source code files; some are written as MATLAB files, 
+     some are written in C, and others are written in C++. 
+   * Files to help you build and configure the source code files into 
+     standalone external applications.
+
+"Integrate C Shared Libraries" and "Integrate C++ Shared Libraries" 
+in the MATLAB Compiler SDK documentation describe most of the files in this
+directory.
+
+
+                   *******************************
+                      EXAMPLE SOURCE CODE FILES
+                   *******************************
+
+The Makefile (Makefile.nmake) found in this directory can be used to 
+build the examples.  The user needs to modify the MATLABROOT
+environment variable found in the makefiles to indicate the appropriate
+location of the root directory of MATLAB.
+
+You can use the following commands to build and test the examples, 
+where <matlabroot> is the directory (without a trailing slash) 
+where MATLAB or the MATLAB Runtime is installed.
+
+To build each example individually, replace build_all with the bare name of
+the final executable as the target to the make. For various
+target names, refer to the Makefile (Makefile.nmake on Windows).
+
+On Windows, the basic command is:
+    nmake /f Makefile.nmake MATLABROOT=<matlabroot> <target>
+    
+On Linux and Mac, the basic command is:
+    gmake -f Makefile MATLABROOT=<matlabroot> <target>
+    
+The targets are as follows:
+    - bnt_exes (to build and test all the examples; do not use on Mac)
+    - build_all (to build all the examples)
+    - clean (to clean all the built files)
+    - reallyclean (to remove directories along with built files)
+    - matrixdriver (to build matrixdriver; in C)
+    - matrixdriverp  (to build matrixdriverp; in C++)
+    - triangle (to build triangle; in C)
+    - trianglep (to build trianglep; in C++)
+    
+
+To execute an executable built on Mac:
+--------------------------------------
+1. If the environment variable DYLD_LIBRARY_PATH is not 
+defined, set it to the following value:
+
+<matlabroot>/runtime/maci64:<matlabroot>/bin/maci64:<matlabroot>/sys/os/maci64:
+
+If it is already defined, prepend that value to its existing value.
+   
+2. Execute the following, where <exec_path> represents the path to the 
+executable and <exec_name> represents its name (matrixdriver, 
+matrixdriverp, triangle, or trianglep):
+
+   <exec_path>/<exec_name>.app/Contents/MacOS/<exec_name>
+
+
+
+The following section explains each example in brief.
+
+matrixdriver.c, addmatrix.m, multiplymatrix.m, eigmatrix.m: Advanced Example
+----------------------------------------------------------------------------
+"Integrate C Shared Libraries" describes a more complicated example 
+of creating a C shared library with MATLAB Compiler SDK and linking it against
+wrapper code to create an executable.  The sample files in this example 
+are:
+
+   * matrixdriver.c, which is a C function that calls the various MATLAB files 
+     listed above and prints the results.
+   * addmatrix.m, which is a MATLAB function file that takes two matrices and 
+     returns their sum.
+   * multiplymatrix.m, which is a MATLAB function file that takes two 
+     matrices and returns the product of the two matrices.
+   * eigmatrix.m, which is a MATLAB function file that takes a matrix and 
+     returns its eigenvalues.
+
+See the documentation for details on building this application.
+
+
+triangle.c, sierpinski.m: Graphics Shared Library
+--------------------------------------------------------------------------------
+This example shows how to create a graphics-based shared library using the MATLAB
+Compiler SDK. Use the following command to create a C shared library and 
+link it against the external C code.
+
+    mcc -l -o libtriangle sierpinski.m
+    mbuild triangle.c -L. -ltriangle (on Linux or Mac)
+    mbuild triangle.c libtriangle.lib (on Windows)
+
+This will create a standalone executable called triangle (triangle.exe on Windows).
+    
+You can also create a C++ shared library from the same MATLAB code and then use it 
+with C++ wrapper code. Use the following command:
+
+    mcc -W cpplib:libtrianglep sierpinski.m
+    mbuild triangle.cpp -L. -ltrianglep -output trianglep (on Linux or Mac)
+    mbuild triangle.cpp libtrianglep.lib -output trianglep (on Windows)
+
+This will create a standalone executable called trianglep (trianglep.exe on Windows).
+
+The xcode subdirectory is designed to allow you to use XCode on the Mac 
+to work with this library.

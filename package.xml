@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>pelican_catherine</name>
+  <version>0.0.0</version>
+  <description>Robust control of Asctec Pelican hexacopter</description>
+
+  <maintainer email="catherine.masse@polymtl.ca">Catherine Masse</maintainer>
+
+  <license>BSD</license>
+
+  <author email="catherine.masse@polymtl.ca">Catherine Masse</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>dynamic_reconfigure</depend>
+  <depend>roscpp</depend>
+  <depend>cmake_modules</depend>
+  <depend>geometry_msgs</depend>
+  <depend>mav_msgs</depend>
+  <depend>nav_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>trajectory_msgs</depend>
+  <depend>message_generation</depend>
+  <depend>std_msgs</depend>
+
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <!-- Other tools can request additional information be placed here -->
+
+  </export>
+</package>

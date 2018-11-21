@@ -1,0 +1,6 @@
+<launch>
+	<node pkg="pelican_catherine" type="matlab_autopilot_hinf_node" name="autopilot_hinf" output="screen">
+		<remap from="odometry" to="/msf_core/odometry" />
+		<remap from="command/motor_rpm" to="/fcu/command/direct_motor" />
+	</node>
+</launch>
